@@ -7,45 +7,38 @@ public class Main {
 
         ArrayList<ArrayList<Integer>> matriz1 = gerarM1();
         System.out.println();
-        ArrayList<ArrayList<Integer>> matriz2 = gerarM2(matriz1);
-        System.out.println();
-        ArrayList<ArrayList<String>> matriz3 = gerarM3(matriz1, matriz2);
-
-
-
         System.out.println(ConsoleColors.GREEN_BRIGHT + "1º matriz finalizada com sucesso!" + ConsoleColors.RESET);
         Main.printMatriz(matriz1);
-
         System.out.println();
 
+        ArrayList<ArrayList<Integer>> matriz2 = gerarM2(matriz1);
+        System.out.println();
         System.out.println(ConsoleColors.GREEN_BRIGHT + "2º matriz finalizada com sucesso!" + ConsoleColors.RESET);
         Main.printMatriz(matriz2);
-
         System.out.println();
 
-        Main.printResultado(matriz3);
+        System.out.println(ConsoleColors.GREEN_BRIGHT + "3º matriz gerada!" + ConsoleColors.RESET);
+        ArrayList<ArrayList<Integer>> matriz3 = gerarM3(matriz1, matriz2);
+
+        System.out.println();
+        System.out.println(ConsoleColors.WHITE_BRIGHT + "3º matriz resultado:" + ConsoleColors.RESET);
+        Main.printMatriz(matriz3);
     }
 
     private static void printMatriz(ArrayList<ArrayList<Integer>> matriz) {
         for (ArrayList<Integer> linha : matriz) {
             for (Integer coluna : linha) {
-                System.out.print(coluna + " ");
+                int pad = 5 - String.valueOf(coluna).length();
+
+                System.out.print(coluna);
+                for (int i = 0; i < pad; i++) {
+                    System.out.print(' ');
+                }
+
+                System.out.print(" ");
             }
             System.out.println();
         }
-    }
-
-    private static void printResultado(ArrayList<ArrayList<String>> matriz) {
-        for (ArrayList<String> linha : matriz) {
-            for (String coluna : linha) {
-                System.out.print(coluna + " ");
-            }
-            System.out.println();
-        }
-    }
-
-    private static void printMatrizes(ArrayList<ArrayList<String>>m1, ArrayList<ArrayList<String>> m2, ArrayList<ArrayList<String>> m3) {
-
     }
 
     private static ArrayList<ArrayList<Integer>> gerarM1() {
@@ -134,8 +127,8 @@ public class Main {
         return matriz;
     }
 
-    private static ArrayList<ArrayList<String>> gerarM3(ArrayList<ArrayList<Integer>> m1, ArrayList<ArrayList<Integer>> m2) {
-        ArrayList<ArrayList<String>> matriz3 = new ArrayList<>();
+    private static ArrayList<ArrayList<Integer>> gerarM3(ArrayList<ArrayList<Integer>> m1, ArrayList<ArrayList<Integer>> m2) {
+        ArrayList<ArrayList<Integer>> matriz3 = new ArrayList<>();
         int colunaM2 = 0;
         int linhaM2 = 0;
         int linhaM3 = 0;
@@ -148,15 +141,21 @@ public class Main {
             // loop da coluna M2
             for (Integer _i : m2.get(0)) { //percorre cada coluna do m2
                 linhaM2 = 0;
+
+                int i = 0;
                 // loop da coluna M1
                 for (Integer coluna : linha) {
-                    matriz3.get(linhaM3).add(coluna + "*" + m2.get(linhaM2).get(colunaM2));
+                    System.out.print(coluna + " * " + m2.get(linhaM2).get(colunaM2) + " ");
+                    if (m1.get(0).size() != ++i) System.out.print("+ ");
+
+                    matriz3.get(linhaM3).add(coluna * m2.get(linhaM2).get(colunaM2));
                     linhaM2++;
                 }
-
+                System.out.print("   ");
                 colunaM2++;
             }
 
+            System.out.println();
             linhaM3++;
         }
 
